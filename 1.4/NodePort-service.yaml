@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-multitool-nodeport
+spec:
+  selector:
+    app: nginx-multitool 
+  ports:
+    - name: nginx  
+      protocol: TCP
+      port: 80
+#      targetPort: 80
+      nodePort: 30000
+      protocol: TCP
+    - name: multitool   
+      port: 8080
+#      targetPort: 8080
+      nodePort: 30001
+  type: NodePort  

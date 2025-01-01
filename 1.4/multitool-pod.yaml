@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: multitool
+  name: multitool-app  
+spec:
+  containers:
+  - name: multitool
+    image: praqma/network-multitool:latest
+    imagePullPolicy: IfNotPresent
+    
