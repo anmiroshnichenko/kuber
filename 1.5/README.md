@@ -26,19 +26,26 @@
 ### Задание 1. Создать Deployment приложений backend и frontend
 
 1. Создать Deployment приложения _frontend_ из образа nginx с количеством реплик 3 шт.
+   ![image](screenshots/1_1.jpg)
 2. Создать Deployment приложения _backend_ из образа multitool. 
+   ![image](screenshots/1_2.jpg)
 3. Добавить Service, которые обеспечат доступ к обоим приложениям внутри кластера. 
+   ![image](screenshots/1_3.jpg)
 4. Продемонстрировать, что приложения видят друг друга с помощью Service.
+   ![image](screenshots/1_4.jpg)
 5. Предоставить манифесты Deployment и Service в решении, а также скриншоты или вывод команды п.4.
-
+   ![image](screenshots/1_5.jpg)
 ------
 
 ### Задание 2. Создать Ingress и обеспечить доступ к приложениям снаружи кластера
 
 1. Включить Ingress-controller в MicroK8S.
 2. Создать Ingress, обеспечивающий доступ снаружи по IP-адресу кластера MicroK8S так, чтобы при запросе только по адресу открывался _frontend_ а при добавлении /api - _backend_.
+   ![image](screenshots/2_2.jpg)
 3. Продемонстрировать доступ с помощью браузера или `curl` с локального компьютера.
+   ![image](screenshots/2_3.jpg)
 4. Предоставить манифесты и скриншоты или вывод команды п.2.
+   ![image](screenshots/2_4.jpg)
 
 ------
 
