@@ -66,7 +66,7 @@ spec:
         hostPath:
           path: /var/data  
 ```
-    ![image](screenshots/1_1.jpg)
+   ![image](screenshots/1_1.jpg)
 2. Сделать так, чтобы busybox писал каждые пять секунд в некий файл в общей директории.
     ![image](screenshots/1_2.jpg)
 3. Обеспечить возможность чтения файла контейнером multitool.
@@ -112,13 +112,13 @@ spec:
         hostPath:
           path: /var/log/
 ```
-    ![image](screenshots/2_1.jpg)
+   ![image](screenshots/2_1.jpg)
 2. Обеспечить возможность чтения файла `/var/log/syslog` кластера MicroK8S.
 3. Продемонстрировать возможность чтения файла изнутри пода.
     ![image](screenshots/2_3.jpg)
 4. Предоставить манифесты Deployment, а также скриншоты или вывод команды из п. 2.
     ![image](screenshots/2_4.jpg)
-    
+
 ------
 
 ### Правила приёма работы
