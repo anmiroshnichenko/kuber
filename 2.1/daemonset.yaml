@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: busybox
+  labels:
+    app: busybox
+spec:  
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'while true; do   cat /input/syslog; done;']
+        volumeMounts:
+        - name: vol
+          mountPath: /input           
+      volumes:
+      - name: vol    
+        hostPath:
+          path: /var/log/
