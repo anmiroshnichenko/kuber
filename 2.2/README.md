@@ -30,10 +30,85 @@
 Создать Deployment приложения, использующего локальный PV, созданный вручную.
 
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-multitool
+  namespace: default
+  labels:
+    app: busybox-multitool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-multitool
+  template:
+    metadata:
+      labels:
+        app: busybox-multitool
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'while true; do sleep 5;  echo $(date) Success! > /output/success.txt; done;']
+        volumeMounts:
+        - name: vol
+          mountPath: /output
+      - name: multitool
+        image: praqma/network-multitool:latest
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'while true; do  sleep 5;  cat /input/success.txt; done;']
+        volumeMounts:
+        - name: vol
+          mountPath: /input        
+      volumes:
+      - name: vol    
+        persistentVolumeClaim:
+          claimName: pvc-vol
+```
+   ![image](screenshots/1_1.jpg)
+
 2. Создать PV и PVC для подключения папки на локальной ноде, которая будет использована в поде.
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1
+spec:  
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: "/data/pv1"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-vol
+  namespace: default
+spec:  
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Gi
+```
+   ![image](screenshots/1_2.jpg)
 3. Продемонстрировать, что multitool может читать файл, в который busybox пишет каждые пять секунд в общей директории. 
+    ![image](screenshots/1_3.jpg)
 4. Удалить Deployment и PVC. Продемонстрировать, что после этого произошло с PV. Пояснить, почему.
-5. Продемонстрировать, что файл сохранился на локальном диске ноды. Удалить PV.  Продемонстрировать что произошло с файлом после удаления PV. Пояснить, почему.
+#### PV перешел в статус Released, потому-что потелял связь с PVC 
+    ![image](screenshots/1_4.jpg)
+5. Продемонстрировать, что файл сохранился на локальном диске ноды. Удалить PV.  Продемонстрировать что произошло с файлом после удаления PV. Пояснить, почему. 
+#### После удаления PV файл  не удалился, потому что  persistentVolumeReclaimPolicy: Retain - определяет, что  после удаления PV ресурсы из внешних провайдеров автоматически не удаляются. 
+    ![image](screenshots/1_5.jpg)
+    ![image](screenshots/1_6.jpg)
 5. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
 
 ------
@@ -45,7 +120,7 @@
 Создать Deployment приложения, которое может хранить файлы на NFS с динамическим созданием PV.
 
 1. Включить и настроить NFS-сервер на MicroK8S.
-2. Создать Deployment приложения состоящего из multitool, и подключить к нему PV, созданный автоматически на сервере NFS.
+2. Создать Deployment приложения состоящего из , и подключить к нему PV, созданный автоматически на сервере NFS.
 3. Продемонстрировать возможность чтения и записи файла изнутри пода. 
 4. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
 
