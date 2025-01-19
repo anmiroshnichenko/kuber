@@ -106,7 +106,7 @@ spec:
 #### PV перешел в статус Released, потому-что потелял связь с PVC 
    ![image](screenshots/1_4.jpg)
 5. Продемонстрировать, что файл сохранился на локальном диске ноды. Удалить PV.  Продемонстрировать что произошло с файлом после удаления PV. Пояснить, почему. 
-#### После удаления PV файл  не удалился, потому что  persistentVolumeReclaimPolicy: Retain - определяет, что  после удаления PV ресурсы из внешних провайдеров автоматически не удаляются. 
+#### После удаления PV файл не удалился потому, что persistentVolumeReclaimPolicy: Retain - определяет, что  после удаления PV ресурсы из внешних провайдеров автоматически не удаляются. 
    ![image](screenshots/1_5.jpg)
    ![image](screenshots/1_6.jpg)
 5. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
@@ -120,8 +120,59 @@ spec:
 Создать Deployment приложения, которое может хранить файлы на NFS с динамическим созданием PV.
 
 1. Включить и настроить NFS-сервер на MicroK8S.
-2. Создать Deployment приложения состоящего из , и подключить к нему PV, созданный автоматически на сервере NFS.
+    ![image](screenshots/2_1.jpg)
+    ![image](screenshots/2_1_1.jpg)
+    ![image](screenshots/2_1_2.jpg)
+2. Создать Deployment приложения состоящего из  из multitool, и подключить к нему PV, созданный автоматически на сервере NFS.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multitool
+  namespace: default
+  labels:
+    app: multitool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multitool
+  template:
+    metadata:
+      labels:
+        app: multitool
+    spec:
+      containers:      
+      - name: multitool
+        image: praqma/network-multitool:latest
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'while true; do sleep 30;  echo $(date) Success! >> /data/success.txt; done;']
+        volumeMounts:
+        - name: vol
+          mountPath: /data        
+      volumes:
+      - name: vol    
+        persistentVolumeClaim:
+          claimName: pvc-nfs
+  ---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-nfs
+  labels:
+    vol: pvc-nfs
+  namespace: default
+spec:
+  storageClassName: "nfs"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+```        
+   ![image](screenshots/2_2.jpg)
 3. Продемонстрировать возможность чтения и записи файла изнутри пода. 
+   ![image](screenshots/2_3.jpg)
 4. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
 
 ------

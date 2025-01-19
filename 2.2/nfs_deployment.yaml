@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multitool
+  namespace: default
+  labels:
+    app: multitool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multitool
+  template:
+    metadata:
+      labels:
+        app: multitool
+    spec:
+      containers:      
+      - name: multitool
+        image: praqma/network-multitool:latest
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'while true; do sleep 30;  echo $(date) Success! >> /data/success.txt; done;']
+        volumeMounts:
+        - name: vol
+          mountPath: /data        
+      volumes:
+      - name: vol    
+        persistentVolumeClaim:
+          claimName: pvc-nfs
+           
