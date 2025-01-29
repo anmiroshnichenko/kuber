@@ -31,7 +31,7 @@ pip install -r requirements.txt
 cp -rfp inventory/sample inventory/mycluster
 ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b -v 
 ```
-  ![image](screenshots/1_1.jpg) 
+![image](screenshots/1_1.jpg) 
 
 ```
 [kube_control_plane]
@@ -46,16 +46,16 @@ kube_control_plane
  node6 ansible_host=192.168.10.60  # ip=10.3.0.6
  node7 ansible_host=192.168.10.70  # ip=10.3.0.6
 ```  
-  ![image](screenshots/1_2.jpg) 
+![image](screenshots/1_2.jpg) 
 
 2. В качестве CRI — containerd.
-  ![image](screenshots/1_2_1.jpg) 
+![image](screenshots/1_2_1.jpg) 
 
 3. Запуск etcd производить на мастере.
-  ![image](screenshots/1_3.jpg) 
-  
+![image](screenshots/1_3.jpg) 
+
 4. Способ установки выбрать самостоятельно.
-  ![image](screenshots/1_4.jpg) 
+![image](screenshots/1_4.jpg) 
 
 ## Дополнительные задания (со звёздочкой)
 
