@@ -56,6 +56,7 @@ kube_control_plane
 
 ![image](screenshots/1_3.jpg) 
 
+4. Способ установки выбрать самостоятельно.
 
 ![image](screenshots/1_4.jpg) 
 
