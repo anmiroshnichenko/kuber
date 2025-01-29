@@ -49,12 +49,14 @@ kube_control_plane
 ![image](screenshots/1_2.jpg) 
 
 2. В качестве CRI — containerd.
+
 ![image](screenshots/1_2_1.jpg) 
 
 3. Запуск etcd производить на мастере.
+
 ![image](screenshots/1_3.jpg) 
 
-4. Способ установки выбрать самостоятельно.
+
 ![image](screenshots/1_4.jpg) 
 
 ## Дополнительные задания (со звёздочкой)
