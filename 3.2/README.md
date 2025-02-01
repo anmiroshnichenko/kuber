@@ -69,8 +69,23 @@ kube_control_plane
 ### Задание 2*. Установить HA кластер
 
 1. Установить кластер в режиме HA.
+#### На всех  трех мастер-нодах  установил keepalived и haproxy. Отредактировал конфигурационныe файлы /etc/keepalived/keepalived.conf и /etc/haproxy/haproxy.cfg и перезапустил сервисы(конфиги приложил). 
+![image](screenshots/2_1.jpg)
+#### Поднял  HA кластер из  3-х мастер нод  и однй воркер(скрипт deploy_k8s_kubeadm.sh приложил )  
+![image](screenshots/2_1.jpg)
+![image](screenshots/2_2.jpg)
+![image](screenshots/2_3.jpg)
+![image](screenshots/2_4.jpg)
 2. Использовать нечётное количество Master-node.
+![image](screenshots/2_5.jpg)
+![image](screenshots/2_6.jpg)
 3. Для cluster ip использовать keepalived или другой способ.
+#### Установил на  локальную машину  с windows kubectl, создал конфиг ./kube/config(приложил)  и подключился   к кластеру 
+![image](screenshots/2_7.jpg)
+#### Выключил машину master1 'MASTER STATE keepalived' кластер  доступен и настроен в режим HA
+![image](screenshots/2_8.jpg)
+![image](screenshots/2_9.jpg)
+
 
 ### Правила приёма работы
 
