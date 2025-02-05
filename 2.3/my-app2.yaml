@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "app2-deployment"
+  labels:
+    app: nginx-multitool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-multitool
+  template:
+    metadata:
+      labels:
+        app: nginx-multitool
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: my-html
+          mountPath: /usr/share/nginx/html      
+      - name: multitool
+        image: praqma/network-multitool:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HTTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: port
+      volumes:
+      - name: my-html
+        configMap:
+          name: env-config 
+          items:
+          - key: index.html
+            path: index.html        
+---
+apiVersion: v1
+kind: ConfigMap              
+metadata:
+  name: env-config
+data:
+  port: "8080"
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Пример HTML-документа</title>
+    </head>
+    <body>
+        <h1>Заголовок страницы</h1>
+        <p>Это пример простого HTML-документа.</p>
+    </body>
+    </html>       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "app2-service"
+spec:
+  selector:
+    app: nginx-multitool 
+  ports:   
+    - name: nginx  
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: multitool   
+      port: 81
+      targetPort: 8080 
+  type: ClusterIP
+
