@@ -55,4 +55,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+#kubectl taint nodes master-1   node-role.kubernetes.io/control-plane:NoSchedule-
+#kubectl taint nodes master-1   node-role.kubernetes.io/control-plane:NoSchedule
 
