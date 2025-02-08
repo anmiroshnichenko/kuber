@@ -1,3 +1,4 @@
+#!/bin/bash
 # Enable iptables Bridged Traffic on all the Nodes
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -45,7 +46,7 @@ sudo nano /etc/containerd/config.toml
             SystemdCgroup = true
 ```
 sudo systemctl restart containerd
-sudo kubeadm init  --pod-network-cidr=10.244.0.0/16  --control-plane-endpoint=192.168.1.150  --upload-certs
+sudo kubeadm init  --pod-network-cidr=10.244.0.0/16  --control-plane-endpoint=lb.domain.local  --upload-certs
 # sudo kubeadm init --apiserver-advertise-address=192.168.10.10  --apiserver-cert-extra-sans=130.193.38.52  --pod-network-cidr=10.244.0.0/16  --control-plane-endpoint=lb.domain.local --upload-certs
 
 mkdir -p $HOME/.kube
@@ -54,4 +55,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+#kubectl taint nodes master-1   node-role.kubernetes.io/control-plane:NoSchedule-
+#kubectl taint nodes master-1   node-role.kubernetes.io/control-plane:NoSchedule
 
