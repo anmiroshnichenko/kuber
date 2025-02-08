@@ -20,6 +20,16 @@
 1. [Инструкция](https://helm.sh/docs/intro/install/) по установке Helm. [Helm completion](https://helm.sh/docs/helm/helm_completion/).
 
 ------
+```
+helm create my-chart 
+helm template my-chart .
+helm template my-chart    ./my-chart/
+helm install my-chart ./my-chart/
+helm uninstall my-chart # delete
+helm  upgrade  my-chart ./my-chart/
+helm rollback my-chart 1
+helm history my-chart
+```
 
 ### Задание 1. Подготовить Helm-чарт для приложения
 

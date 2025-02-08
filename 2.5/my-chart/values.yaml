@@ -1,0 +1,5 @@
+image: nginx:1.16.0
+name: test-pod
+service:
+  enable: true
+  name: my-service
