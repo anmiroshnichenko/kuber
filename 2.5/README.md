@@ -21,14 +21,14 @@
 
 ------
 ```
-helm create my-chart 
-helm template my-chart .
-helm template my-chart    ./my-chart/
-helm install my-chart ./my-chart/
-helm uninstall my-chart # delete
-helm  upgrade  my-chart ./my-chart/
-helm rollback my-chart 1
-helm history my-chart
+helm create app-chart 
+helm template app-chart .
+helm template app-chart    ./app-chart/
+helm install app-chart ./app-chart/
+helm uninstall app-chart # delete
+helm  upgrade  app-chart ./app-chart/
+helm rollback app-chart 1
+helm history app-chart
 ```
 
 ### Задание 1. Подготовить Helm-чарт для приложения
@@ -36,13 +36,24 @@ helm history my-chart
 1. Необходимо упаковать приложение в чарт для деплоя в разные окружения. 
 2. Каждый компонент приложения деплоится отдельным deployment’ом или statefulset’ом.
 3. В переменных чарта измените образ приложения для изменения версии.
-
+#### Упаковал тестовое приложение в чарт app-chart
+  ![image](screenshots/1_1.jpg) 
 ------
+
 ### Задание 2. Запустить две версии в разных неймспейсах
 
 1. Подготовив чарт, необходимо его проверить. Запуститe несколько копий приложения.
 2. Одну версию в namespace=app1, вторую версию в том же неймспейсе, третью версию в namespace=app2.
+```
+helm install prod  ./app-chart/ -n app2  --create-namespace
+helm install dev   ./app-chart/ -n app1  --create-namespace
+helm install test  ./app-chart/ -n app1  --create-namespace
+```
+  ![image](screenshots/2_1.jpg)
+  ![image](screenshots/2_2.jpg)
+
 3. Продемонстрируйте результат.
+ ![image](screenshots/2_3.jpg)
 
 ### Правила приёма работы
 
