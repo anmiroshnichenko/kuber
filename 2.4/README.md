@@ -49,13 +49,13 @@ kubectl get sa
 
 ### Задание 1. Создайте конфигурацию для подключения пользователя
 
-1. Создайте и подпишите SSL-сертификат для подключения к кластеру.
+1. Создайте и подпишите SSL-сертификат для подключения к кластеру.  
 [miroshnichenko.key](miroshnichenko.key), [miroshnichenko.crt](miroshnichenko.crt)
 ![image](screenshots/1_1.jpg)  
 2. Настройте конфигурационный файл kubectl для подключения.
 ![image](screenshots/1_2.jpg) 
 ![image](screenshots/1_2_1.jpg) 
-3. Создайте роли и все необходимые настройки для пользователя.
+3. Создайте роли и все необходимые настройки для пользователя.  
 [role](role.yaml), [role-binding](role-binding.yaml) 
 ![image](screenshots/1_3.jpg) 
 4. Предусмотрите права пользователя. Пользователь может просматривать логи подов и их конфигурацию (`kubectl logs pod <pod_id>`, `kubectl describe pod <pod_id>`).
